@@ -1,0 +1,23 @@
+name: 'Rollbar deploy'
+description: 'Notify to Rollbar about a deploy'
+inputs:
+  environment:
+    description: 'Environment where is deployed'
+    required: true
+  version:
+    description: 'Version deployed'
+    required: true
+  status:
+    description: 'Deploy status'
+    required: false
+    default: 'succeeded'
+outputs:
+  deploy_id:
+    description: 'The id of the deploy'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.environment }}
+    - ${{ inputs.version }}
+    - ${{ inputs.status }}
