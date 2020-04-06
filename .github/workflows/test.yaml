@@ -1,0 +1,56 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Build
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Build
+      run: echo Building...
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    name: Deploy
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Nofity rollbar deploy start
+      uses: ./
+      id: rollbar_pre_deploy
+      with:
+        environment: 'production'
+        version: '1.0.0'
+        status: 'started'
+      env:
+        ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
+
+    # Print Rollbar's deploy id
+    - name: Get the Rollbar deploy id
+      run: echo Deploy created with id ${{ steps.rollbar_pre_deploy.outputs.deploy_id }}
+
+    - name: Deploy
+      run: echo Deploying...
+
+    - name: Nofity rollbar deploy succeeded
+      uses: ./
+      id: rollbar_post_deploy
+      with:
+        environment: 'production'
+        version: '1.0.0'
+        status: 'succeeded'
+      env:
+        ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
+        DEPLOY_ID: ${{ steps.rollbar_pre_deploy.outputs.deploy_id }}
+
+    # Print Rollbar's deploy id
+    - name: Verify both outputs are the same.
+      run: if [[ "$START_DEPLOY_ID" != "$FINISH_DEPLOY_ID" ]]; then exit 1; fi
+      env:
+        START_DEPLOY_ID: ${{ steps.rollbar_pre_deploy.outputs.deploy_id }}
+        FINISH_DEPLOY_ID: ${{ steps.rollbar_post_deploy.outputs.deploy_id }}

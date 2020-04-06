@@ -38,7 +38,7 @@ else
     ROLLBAR_DEPLOY_ID=$(echo $RESPONSE | jq -r '.result.id')
 fi
 
-# If not ROLLBAR_DEPLOY_ID something failed
+If not ROLLBAR_DEPLOY_ID something failed
 if [[ "$ROLLBAR_DEPLOY_ID" == "null" ]]; then
     exit 1
 fi

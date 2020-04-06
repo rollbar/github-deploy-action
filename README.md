@@ -1,5 +1,7 @@
 # Github deploy action
 
+![CI](https://github.com/rollbar/github-deploy-action/workflows/CI/badge.svg)
+
 A GitHub action that notifies deploys to [Rollbar](https://rollbar.com).
 
 
