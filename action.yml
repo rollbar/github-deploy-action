@@ -1,5 +1,8 @@
 name: 'Rollbar deploy'
 description: 'Notify to Rollbar about a deploy'
+branding:
+  icon: 'package'
+  color: 'blue'
 inputs:
   environment:
     description: 'Environment where is deployed'
