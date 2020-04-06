@@ -7,11 +7,11 @@ A GitHub action that notifies deploys to [Rollbar](https://rollbar.com).
 
 ## Usage
 
-This action requires that you set the `ROLLBAR_ACCESS_TOKEN` environment variable with a token that must have the `post_server_item` scope.
+This action requires that you set the `ROLLBAR_ACCESS_TOKEN` environment variable with a token that must have the [`post_server_item`](https://explorer.docs.rollbar.com/#section/Authentication/Project-access-tokens) scope.
 You can find it under your project's settings in the Project access token section.
 
 When notifiying deploys in two stages, for sending to Rollbar when a deploy starts and the status of its result (succeeded or failed ) you need
-also to set the 'DEPLOY_ID' environment variable with the ouput of the previous step.
+also to set the `DEPLOY_ID` environment variable with the ouput of the previous step.
 
 
 ### Inputs
