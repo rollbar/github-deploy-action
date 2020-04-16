@@ -35,7 +35,7 @@ also to set the `DEPLOY_ID` environment variable with the ouput of the previous 
 ```yaml
 steps:
   - name: Notify deploy to Rollbar
-    uses: rollbar/github-deploy-action@1.0.0
+    uses: rollbar/github-deploy-action@v1.0.0
     id: rollbar_deploy
     with:
       environment: 'production'
@@ -50,7 +50,7 @@ steps:
 ```yaml
 steps:
   - name: Notify start deploy to Rollbar
-    uses: rollbar/github-deploy-action@1.0.0
+    uses: rollbar/github-deploy-action@v1.0.0
     id: rollbar_pre_deploy
     with:
       environment: 'production'
@@ -63,7 +63,7 @@ steps:
 
 steps:
   - name: Notify finish deploy to Rollbar
-    uses: rollbar/github-deploy-action@1.0.0
+    uses: rollbar/github-deploy-action@v1.0.0
     id: rollbar_post_deploy
     with:
       environment: 'production'
