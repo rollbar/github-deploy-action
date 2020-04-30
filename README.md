@@ -35,11 +35,11 @@ also to set the `DEPLOY_ID` environment variable with the ouput of the previous 
 ```yaml
 steps:
   - name: Notify deploy to Rollbar
-    uses: rollbar/github-deploy-action@1.0.1
+    uses: rollbar/github-deploy-action@1.0.2
     id: rollbar_deploy
     with:
       environment: 'production'
-      version: '1.0.0'
+      version: ${{ github.sha }}
     env:
       ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
 ```
@@ -50,11 +50,11 @@ steps:
 ```yaml
 steps:
   - name: Notify start deploy to Rollbar
-    uses: rollbar/github-deploy-action@1.0.1
+    uses: rollbar/github-deploy-action@1.0.2
     id: rollbar_pre_deploy
     with:
       environment: 'production'
-      version: '1.0.0'
+      version: ${{ github.sha }}
       status: 'started'
     env:
       ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
@@ -63,11 +63,11 @@ steps:
 
 steps:
   - name: Notify finish deploy to Rollbar
-    uses: rollbar/github-deploy-action@1.0.1
+    uses: rollbar/github-deploy-action@1.0.2
     id: rollbar_post_deploy
     with:
       environment: 'production'
-      version: '1.0.0'
+      version: ${{ github.sha }}
       status: 'succeeded'
     env:
       ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
