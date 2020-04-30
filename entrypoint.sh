@@ -26,7 +26,7 @@ else
 fi
 
 RESPONSE=$(curl -X $METHOD https://api.rollbar.com/api/1/deploy/$DEPLOY_ID \
-                --form access_token=$ROLLBAR_ACCESS_TOKEN \
+                -H "X-ROLLBAR-ACCESS-TOKEN: $ROLLBAR_ACCESS_TOKEN" \
                 --form environment=$1 \
                 --form revision=$2 \
                 --form status=$3)
