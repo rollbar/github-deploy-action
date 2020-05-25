@@ -29,8 +29,8 @@ RESPONSE=$(curl -X $METHOD https://api.rollbar.com/api/1/deploy/$DEPLOY_ID \
                 -H "X-ROLLBAR-ACCESS-TOKEN: $ROLLBAR_ACCESS_TOKEN" \
                 --form environment=$1 \
                 --form revision=$2 \
-                --form rollbar_username=$3 \
-                --form status=$3)
+                --form status=$3 \
+                --form rollbar_username=$4)
 
 # Get the deploy id depending on the response as they are different for POST and PATCH
 if [[ $METHOD == "POST" ]]; then
