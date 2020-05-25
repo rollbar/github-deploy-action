@@ -16,7 +16,7 @@ also to set the `DEPLOY_ID` environment variable with the ouput of the previous 
 Optionally set `ROLLBAR_USERNAME` environment variable, usernames can be found at:
 > https://rollbar.com/settings/accounts/YOUR_TEAM/members/
 
-> NOTE: Using [`github.actor`](https://help.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#github-context) as the `ROLLBAR_USERNAME` ensure the username in Rollbar matches your github username.
+> NOTE: When using [`github.actor`](https://help.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#github-context) as the `ROLLBAR_USERNAME` ensure the username in Rollbar matches your github username.
 
 
 ### Inputs
