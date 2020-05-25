@@ -14,6 +14,10 @@ inputs:
     description: 'Deploy status'
     required: false
     default: 'succeeded'
+  rollbar_username:
+    description: 'Rollbar usernamee'
+    required: false
+    default: ''
 outputs:
   deploy_id:
     description: 'The id of the deploy'
@@ -24,3 +28,4 @@ runs:
     - ${{ inputs.environment }}
     - ${{ inputs.version }}
     - ${{ inputs.status }}
+    - ${{ inputs.rollbar_username }}
