@@ -13,6 +13,11 @@ You can find it under your project's settings in the Project access token sectio
 When notifiying deploys in two stages, for sending to Rollbar when a deploy starts and the status of its result (succeeded or failed ) you need
 also to set the `DEPLOY_ID` environment variable with the ouput of the previous step.
 
+Optionally set `ROLLBAR_USERNAME` environment variable, usernames can be found at:
+> https://rollbar.com/settings/accounts/YOUR_TEAM/members/
+
+> NOTE: When using [`github.actor`](https://help.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#github-context) as the `ROLLBAR_USERNAME` ensure the username in Rollbar matches your github username.
+
 
 ### Inputs
 
@@ -42,6 +47,7 @@ steps:
       version: ${{ github.sha }}
     env:
       ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
+      ROLLBAR_USERNAME: ${{ github.actor }}
 ```
 
 
@@ -58,6 +64,7 @@ steps:
       status: 'started'
     env:
       ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
+      ROLLBAR_USERNAME: ${{ github.actor }}
 
 ...
 
@@ -71,5 +78,6 @@ steps:
       status: 'succeeded'
     env:
       ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
+      ROLLBAR_USERNAME: ${{ github.actor }}
       DEPLOY_ID: ${{ steps.rollbar_pre_deploy.outputs.deploy_id }}
 ```
