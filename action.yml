@@ -27,3 +27,4 @@ runs:
     - ${{ inputs.environment }}
     - ${{ inputs.version }}
     - ${{ inputs.status }}
+    - ${{ inputs.source_map }}
