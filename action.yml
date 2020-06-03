@@ -15,8 +15,11 @@ inputs:
     required: false
     default: 'succeeded'
   source_map:
-    description: 'Location of JavaScript source map'
+    description: 'File path of JavaScript source map'
     required: false
+  minified_url:
+    description: 'Url of minified JavaScript file'
+    required: false  
 outputs:
   deploy_id:
     description: 'The id of the deploy'
@@ -28,3 +31,4 @@ runs:
     - ${{ inputs.version }}
     - ${{ inputs.status }}
     - ${{ inputs.source_map }}
+    - ${{ inputs.minified_url }}
