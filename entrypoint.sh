@@ -49,9 +49,10 @@ echo "::set-output name=deploy_id::$ROLLBAR_DEPLOY_ID"
 
 # Source map is provided
 if [[ "$4" ]]; then
-    RESPONSE_SOURCE_MAP=$(curl https://api.rollbar.com/api/1/sourcemap \
+    RESPONSE_SOURCE_MAP=$(curl -X https://api.rollbar.com/api/1/sourcemap \
                           -F access_token=$ROLLBAR_ACCESS_TOKEN \
                           -F version=$2 \
                           -F source_map=@$4 \
-                          -F minified_url=$5
+                          -F minified_url=$5)
+fi
                           
