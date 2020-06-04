@@ -10,7 +10,7 @@ inputs:
   version: # required
     description: 'Version deployed'
     required: true
-  status: # optional, default is succeeded.
+  status: # optional
     description: 'Deploy status'
     required: false
     default: 'succeeded'
