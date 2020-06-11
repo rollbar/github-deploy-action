@@ -14,11 +14,11 @@ inputs:
     description: 'Deploy status'
     required: false
     default: 'succeeded'
-  source_map: # optional. You can use upload-artifact and download-artifact actions.
-    description: 'JavaScript source map file, e.g, bundle.js.map as a Github Artifact.'
+  source_maps: # optional. You can use upload-artifact and download-artifact actions.
+    description: 'JavaScript source map files, e.g, bundle.js.map as a Github Artifact.'
     required: false
-  minified_url: # optional. 
-    description: 'URL to your minified file without schema'
+  minified_urls: # optional. 
+    description: 'URLs to your minified files without schema'
     required: false  
 outputs:
   deploy_id:
@@ -30,5 +30,5 @@ runs:
     - ${{ inputs.environment }}
     - ${{ inputs.version }}
     - ${{ inputs.status }}
-    - ${{ inputs.source_map }}
-    - ${{ inputs.minified_url }}
+    - ${{ inputs.source_maps }}
+    - ${{ inputs.minified_urls }}
