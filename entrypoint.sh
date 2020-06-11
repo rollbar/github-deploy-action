@@ -50,10 +50,15 @@ echo "::set-output name=deploy_id::$ROLLBAR_DEPLOY_ID"
 # Source map is provided
 if [[ "$4" ]]; then
     echo "Uploading source map..."
-    RESPONSE_SOURCE_MAP=$(curl -v https://api.rollbar.com/api/1/sourcemap \
-                          -F access_token=$ROLLBAR_ACCESS_TOKEN \
-                          -F version=$2 \
-                          -F minified_url=$5 \
-                          -F source_map=@$4)
+    map_files=($4)
+    min_files=($5)
+    for i in ${!map_files[@]}; do
+        echo "${map_files[$i]} : ${min_files[$i]}"
+        RESPONSE_SOURCE_MAP=$(curl -v https://api.rollbar.com/api/1/sourcemap \
+                      -F access_token=$ROLLBAR_ACCESS_TOKEN \
+                      -F version=$2 \
+                      -F minified_url=${min_files[$i]} \
+                      -F source_map=@${map_files[$i]})
+
+    done
 fi
-                          
