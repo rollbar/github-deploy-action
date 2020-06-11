@@ -98,7 +98,7 @@ jobs:
       with:
         name: bundle2.js.map
         path: public/bundle2.js.map
-
+  # This workflow deploys source maps to Rollbar
   deploy:
     needs: build
     steps:
