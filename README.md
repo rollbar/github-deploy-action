@@ -26,7 +26,8 @@ Optionally set `ROLLBAR_USERNAME` environment variable, usernames can be found a
 | `environment`  | `true`    |              | The environment where the deploy is being done.  |
 | `version`      | `true`    |              | The version being deployed.                      |
 | `status`       | `false`   | `succeeded`  | The status of the deploy.                        |
-
+| `source_maps`  | `false`   |              | JS source map files.                             |
+| `minified_urls`| `false`   |              | Minified URLs linked to source maps above        |
 
 ### Ouputs
 
@@ -80,4 +81,42 @@ steps:
       ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
       ROLLBAR_USERNAME: ${{ github.actor }}
       DEPLOY_ID: ${{ steps.rollbar_pre_deploy.outputs.deploy_id }}
+```
+### Example with JS Source Map
+```yaml
+jobs:
+  # This workflow builds source maps
+  build:
+    - uses: actions/checkout@v2
+    - name: npm run build
+      run: npm run build --prefix templates/static/
+    - uses: actions/upload-artifact@v2
+      with:
+        name: bundle.js.map
+        path: public/bundle.js.map
+    - uses: actions/upload-artifact@v2
+      with:
+        name: bundle2.js.map
+        path: public/bundle2.js.map
+
+  deploy:
+    needs: build
+    steps:
+    - uses: actions/checkout@v2      
+    - uses: actions/download-artifact@v2
+      with:
+        name: bundle.js.map
+    - uses: actions/download-artifact@v2
+      with:
+        name: bundle2.js.map
+    - name: Rollbar deploy
+      uses: rollbar/github-deploy-action@1.1.0
+      with:
+        environment: production
+        version: ${{ github.sha }}
+        status: succeeded
+        source_maps: bundle.js.map bundle2.js.map
+        minified_urls: https://www.example.com/public/bundle.js https://www.example.com/public/bundle2.js
+      env:
+          ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
 ```
