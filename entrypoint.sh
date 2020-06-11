@@ -1,5 +1,11 @@
 #!/bin/bash
 
+ENVIRONMENT=$1
+VERSION=$2
+STATUS=$3
+SOURCE_MAP_FILES=$4
+MINIFIED_FILES=$5
+
 # Ensure that the ROLLBAR_ACCESS_TOKEN secret is included
 if [[ -z "$ROLLBAR_ACCESS_TOKEN" ]]; then
   echo "Set the ROLLBAR_ACCESS_TOKEN env variable."
@@ -7,13 +13,13 @@ if [[ -z "$ROLLBAR_ACCESS_TOKEN" ]]; then
 fi
 
 # Ensure that the environment is included
-if [[ -z "$1" ]]; then
+if [[ -z "$ENVIRONMENT" ]]; then
   echo "Missing the environment argument."
   exit 1
 fi
 
 # Ensure that the version is included
-if [[ -z "$2" ]]; then
+if [[ -z "$VERSION" ]]; then
   echo "Missing the version argument."
   exit 1
 fi
@@ -27,9 +33,9 @@ fi
 
 RESPONSE=$(curl -X $METHOD https://api.rollbar.com/api/1/deploy/$DEPLOY_ID \
                 -H "X-ROLLBAR-ACCESS-TOKEN: $ROLLBAR_ACCESS_TOKEN" \
-                --form environment=$1 \
-                --form revision=$2 \
-                --form status=$3 \
+                --form environment=$ENVIRONMENT \
+                --form revision=$VERSION \
+                --form status=$STATUS \
                 --form rollbar_username=$ROLLBAR_USERNAME)
 
 # Get the deploy id depending on the response as they are different for POST and PATCH
@@ -48,17 +54,19 @@ fi
 echo "::set-output name=deploy_id::$ROLLBAR_DEPLOY_ID"
 
 # Source map is provided
-if [[ "$4" ]]; then
+if [[ "$SOURCE_MAP_FILES" ]]; then
     echo "Uploading source map..."
-    map_files=($4)
-    min_files=($5)
-    for i in ${!map_files[@]}; do
-        echo "${map_files[$i]} : ${min_files[$i]}"
-        RESPONSE_SOURCE_MAP=$(curl -v https://api.rollbar.com/api/1/sourcemap \
+    if [[ "${#SOURCE_MAP_FILES[@]}" -ne "${#MINIFIED_FILES[@]}" ]]; then
+        echo "Number of source map files and minified files are not same."
+        exit 1
+    fi  
+    for i in ${!SOURCE_MAP_FILES[@]}; do
+        echo "${SOURCE_MAP_FILES[$i]} : ${MINIFIED_FILES[$i]}"
+        curl -v https://api.rollbar.com/api/1/sourcemap \
                       -F access_token=$ROLLBAR_ACCESS_TOKEN \
-                      -F version=$2 \
-                      -F minified_url=${min_files[$i]} \
-                      -F source_map=@${map_files[$i]})
-
+                      -F version=$VERSION \
+                      -F minified_url=${MINIFIED_FILES[$i]} \
+                      -F source_map=@${SOURCE_MAP_FILES[$i]}
     done
 fi
+
