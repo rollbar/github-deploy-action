@@ -13,6 +13,15 @@ jobs:
     - name: Build
       run: echo Building...
 
+    - uses: actions/upload-artifact@v2
+      with:
+        name: bundle1.js.map
+        path: test/bundle1.js.map
+    - uses: actions/upload-artifact@v2
+      with:
+        name: bundle2.js.map
+        path: test/bundle2.js.map
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
@@ -31,6 +40,13 @@ jobs:
         ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
         ROLLBAR_USERNAME: ${{ github.actor }}
 
+    - uses: actions/download-artifact@v2
+      with:
+        name: bundle1.js.map
+    - uses: actions/download-artifact@v2
+      with:
+        name: bundle2.js.map    
+
     # Print Rollbar's deploy id
     - name: Get the Rollbar deploy id
       run: echo Deploy created with id ${{ steps.rollbar_pre_deploy.outputs.deploy_id }}
@@ -45,11 +61,13 @@ jobs:
         environment: 'production'
         version: ${{ github.sha }}
         status: 'succeeded'
+        source_map: bundle1.js.map bundle2.js.map
+        minified_url: https://www.example.com/abc/bundle1.js https://www.example.com/xyz/bundle2.js
       env:
         ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
         DEPLOY_ID: ${{ steps.rollbar_pre_deploy.outputs.deploy_id }}
         ROLLBAR_USERNAME: ${{ github.actor }}
-
+        
     # Print Rollbar's deploy id
     - name: Verify both outputs are the same.
       run: if [[ "$START_DEPLOY_ID" != "$FINISH_DEPLOY_ID" ]]; then exit 1; fi
