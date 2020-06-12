@@ -33,7 +33,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Nofity rollbar deploy start
+    - name: Notify rollbar deploy start
       uses: ./
       id: rollbar_pre_deploy
       with:
