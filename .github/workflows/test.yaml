@@ -58,7 +58,7 @@ jobs:
     - name: Deploy
       run: echo Deploying...
 
-    - name: Nofity rollbar deploy succeeded
+    - name: Notify rollbar deploy succeeded
       uses: ./
       id: rollbar_post_deploy
       with:
