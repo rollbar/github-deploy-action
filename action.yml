@@ -4,16 +4,22 @@ branding:
   icon: 'package'
   color: 'blue'
 inputs:
-  environment:
-    description: 'Environment where is deployed'
+  environment: # required
+    description: 'Environment where your code is running. e.g. production'
     required: true
-  version:
+  version: # required
     description: 'Version deployed'
     required: true
-  status:
+  status: # optional
     description: 'Deploy status'
     required: false
     default: 'succeeded'
+  source_maps: # optional. You can use upload-artifact and download-artifact actions.
+    description: 'JavaScript source map files, e.g, bundle.js.map as a Github Artifact.'
+    required: false
+  minified_urls: # optional. 
+    description: 'URLs to your minified files without schema'
+    required: false  
 outputs:
   deploy_id:
     description: 'The id of the deploy'
@@ -24,3 +30,5 @@ runs:
     - ${{ inputs.environment }}
     - ${{ inputs.version }}
     - ${{ inputs.status }}
+    - ${{ inputs.source_maps }}
+    - ${{ inputs.minified_urls }}
