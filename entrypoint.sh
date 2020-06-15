@@ -61,12 +61,12 @@ if [[ "$SOURCE_MAP_FILES" ]]; then
         exit 1
     fi  
     for i in ${!SOURCE_MAP_FILES[@]}; do
-        echo "${SOURCE_MAP_FILES[$i]} : ${MINIFIED_FILES[$i]}"
+        echo "${SOURCE_MAP_FILES[i]} : ${MINIFIED_FILES[i]}"
         curl -v https://api.rollbar.com/api/1/sourcemap \
                       -F access_token=$ROLLBAR_ACCESS_TOKEN \
                       -F version=$VERSION \
-                      -F minified_url=${MINIFIED_FILES[$i]} \
-                      -F source_map=@${SOURCE_MAP_FILES[$i]}
+                      -F minified_url=${MINIFIED_FILES[i]} \
+                      -F source_map=@${SOURCE_MAP_FILES[i]}
     done
 fi
 
