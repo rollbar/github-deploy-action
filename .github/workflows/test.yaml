@@ -65,8 +65,8 @@ jobs:
         environment: 'production'
         version: ${{ github.sha }}
         status: 'succeeded'
-        source_map: bundle1.js.map bundle2.js.map
-        minified_url: https://www.example.com/abc/bundle1.js https://www.example.com/xyz/bundle2.js
+        source_maps: bundle1.js.map bundle2.js.map
+        minified_urls: https://www.example.com/abc/bundle1.js https://www.example.com/xyz/bundle2.js
       env:
         ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
         DEPLOY_ID: ${{ steps.rollbar_pre_deploy.outputs.deploy_id }}
