@@ -56,17 +56,19 @@ echo "::set-output name=deploy_id::$ROLLBAR_DEPLOY_ID"
 # Source map is provided
 if [[ "$SOURCE_MAP_FILES" ]]; then
     echo "Uploading source map..."
-    if [[ "${#SOURCE_MAP_FILES[@]}" -ne "${#MINIFIED_FILES[@]}" ]]; then
-        echo "Number of source map files and minified files are not same."
+    map_files_array=($SOURCE_MAP_FILES)
+    min_files_array=($MINIFIED_FILES)
+    if [[ "${#map_files_array[@]}" -ne "${#min_files_array[@]}" ]]; then
+        echo "Number of source map files and minified files are not equal."
         exit 1
-    fi  
-    for i in ${!SOURCE_MAP_FILES[@]}; do
-        echo "${SOURCE_MAP_FILES[i]} : ${MINIFIED_FILES[i]}"
+    fi
+    for i in ${!map_files_array[@]}; do
+        echo "${map_files_array[$i]} : ${min_files_array[$i]}"
         curl -v https://api.rollbar.com/api/1/sourcemap \
                       -F access_token=$ROLLBAR_ACCESS_TOKEN \
-                      -F version=$VERSION \
-                      -F minified_url=${MINIFIED_FILES[i]} \
-                      -F source_map=@${SOURCE_MAP_FILES[i]}
+                      -F version=$2 \
+                      -F minified_url=${min_files_array[$i]} \
+                      -F source_map=@${map_files_array[$i]}
     done
 fi
 
