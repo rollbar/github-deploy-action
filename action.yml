@@ -17,9 +17,12 @@ inputs:
   source_maps: # optional. You can use upload-artifact and download-artifact actions.
     description: 'JavaScript source map files, e.g, bundle.js.map as a Github Artifact.'
     required: false
-  minified_urls: # optional. 
+  minified_urls: # optional.
     description: 'URLs to your minified files without schema'
-    required: false  
+    required: false
+  local_username: # optional.
+    description: 'Name of the deploying user (used if ROLLBAR_USERNAME is not set)'
+    required: false
 outputs:
   deploy_id:
     description: 'The id of the deploy'
@@ -32,3 +35,4 @@ runs:
     - ${{ inputs.status }}
     - ${{ inputs.source_maps }}
     - ${{ inputs.minified_urls }}
+    - ${{ inputs.local_username }}
