@@ -21,15 +21,16 @@ Optionally set `ROLLBAR_USERNAME` environment variable, usernames can be found a
 
 ### Inputs
 
-| Input          | Required  | Default      | Description                                      |
-| -------------- | --------- | ------------ | ------------------------------------------------ |
-| `environment`  | `true`    |              | The environment where the deploy is being done.  |
-| `version`      | `true`    |              | The version being deployed.                      |
-| `status`       | `false`   | `succeeded`  | The status of the deploy.                        |
-| `source_maps`  | `false`   |              | JS source map files.                             |
-| `minified_urls`| `false`   |              | Minified URLs linked to source maps above        |
+| Input           | Required  | Default      | Description                                      |
+| --------------- | --------- | ------------ | ------------------------------------------------ |
+| `environment`   | `true`    |              | The environment where the deploy is being done.  |
+| `version`       | `true`    |              | The version being deployed.                      |
+| `status`        | `false`   | `succeeded`  | The status of the deploy.                        |
+| `source_maps`   | `false`   |              | JS source map files.                             |
+| `minified_urls` | `false`   |              | Minified URLs linked to source maps above        |
+| `local_username`| `false`   |              | Username of the deploying user. Alternative to setting ROLLBAR_USERNAME |
 
-### Ouputs
+### Outputs
 
 | Input        | Description           |
 | ------------ | --------------------- |
@@ -102,7 +103,7 @@ jobs:
   deploy:
     needs: build
     steps:
-    - uses: actions/checkout@v2      
+    - uses: actions/checkout@v2
     - uses: actions/download-artifact@v2
       with:
         name: bundle.js.map
