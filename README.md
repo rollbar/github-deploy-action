@@ -1,4 +1,4 @@
-# Github deploy action
+# GitHub deploy action
 
 ![CI](https://github.com/rollbar/github-deploy-action/workflows/CI/badge.svg)
 
@@ -16,7 +16,7 @@ also to set the `DEPLOY_ID` environment variable with the ouput of the previous 
 Optionally set `ROLLBAR_USERNAME` environment variable, usernames can be found at:
 > https://rollbar.com/settings/accounts/YOUR_TEAM/members/
 
-> NOTE: When using [`github.actor`](https://help.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#github-context) as the `ROLLBAR_USERNAME` ensure the username in Rollbar matches your github username.
+> NOTE: When using [`github.actor`](https://help.github.com/en/actions/reference/context-and-expression-syntax-for-github-actions#github-context) as the `ROLLBAR_USERNAME` ensure the username in Rollbar matches your GitHub username. If your Rollbar usernames don't match GitHub usernames, you may want to instead set the `local_username` input.
 
 
 ### Inputs
