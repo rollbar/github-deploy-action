@@ -40,6 +40,7 @@ jobs:
         environment: 'production'
         version: ${{ github.sha }}
         status: 'started'
+        local_username: ${{ github.actor }}
       env:
         ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
         ROLLBAR_USERNAME: ${{ github.actor }}
@@ -67,6 +68,7 @@ jobs:
         status: 'succeeded'
         source_maps: bundle1.js.map bundle2.js.map
         minified_urls: https://www.example.com/abc/bundle1.js https://www.example.com/xyz/bundle2.js
+        local_username: ${{ github.actor }}
       env:
         ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
         DEPLOY_ID: ${{ steps.rollbar_pre_deploy.outputs.deploy_id }}
