@@ -110,7 +110,7 @@ jobs:
       with:
         name: bundle2.js.map
     - name: Rollbar deploy
-      uses: rollbar/github-deploy-action@@2.0.0
+      uses: rollbar/github-deploy-action@2.0.0
       with:
         environment: production
         version: ${{ github.sha }}
