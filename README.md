@@ -41,7 +41,7 @@ Optionally set `ROLLBAR_USERNAME` environment variable, usernames can be found a
 ```yaml
 steps:
   - name: Notify deploy to Rollbar
-    uses: rollbar/github-deploy-action@1.1.0
+    uses: rollbar/github-deploy-action@2.0.0
     id: rollbar_deploy
     with:
       environment: 'production'
@@ -57,7 +57,7 @@ steps:
 ```yaml
 steps:
   - name: Notify start deploy to Rollbar
-    uses: rollbar/github-deploy-action@1.1.0
+    uses: rollbar/github-deploy-action@2.0.0
     id: rollbar_pre_deploy
     with:
       environment: 'production'
@@ -71,7 +71,7 @@ steps:
 
 steps:
   - name: Notify finish deploy to Rollbar
-    uses: rollbar/github-deploy-action@1.1.0
+    uses: rollbar/github-deploy-action@2.0.0
     id: rollbar_post_deploy
     with:
       environment: 'production'
@@ -110,7 +110,7 @@ jobs:
       with:
         name: bundle2.js.map
     - name: Rollbar deploy
-      uses: rollbar/github-deploy-action@1.1.0
+      uses: rollbar/github-deploy-action@@2.0.0
       with:
         environment: production
         version: ${{ github.sha }}
