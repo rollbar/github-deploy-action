@@ -6,6 +6,7 @@ STATUS=$3
 SOURCE_MAP_FILES=$4
 MINIFIED_FILES=$5
 LOCAL_USERNAME=$6
+COMMENT=$7
 
 # Ensure that the ROLLBAR_ACCESS_TOKEN secret is included
 if [[ -z "$ROLLBAR_ACCESS_TOKEN" ]]; then
@@ -38,7 +39,8 @@ RESPONSE=$(curl -X $METHOD https://api.rollbar.com/api/1/deploy/$DEPLOY_ID \
                 --form revision=$VERSION \
                 --form status=$STATUS \
                 --form rollbar_username=$ROLLBAR_USERNAME \
-                --form local_username=$LOCAL_USERNAME)
+                --form local_username=$LOCAL_USERNAME) \
+                --form comment=$COMMENT)
 
 # Get the deploy id depending on the response as they are different for POST and PATCH
 if [[ $METHOD == "POST" ]]; then
