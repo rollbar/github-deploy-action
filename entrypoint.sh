@@ -53,7 +53,7 @@ if [[ "$ROLLBAR_DEPLOY_ID" == "null" ]]; then
 fi
 
 # Done
-echo "::set-output name=deploy_id::$ROLLBAR_DEPLOY_ID"
+echo "deploy_id=$ROLLBAR_DEPLOY_ID" >> $GITHUB_OUTPUT
 
 # Source map is provided
 if [[ "$SOURCE_MAP_FILES" ]]; then
