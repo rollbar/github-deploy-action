@@ -29,6 +29,7 @@ Optionally set `ROLLBAR_USERNAME` environment variable, usernames can be found a
 | `source_maps`   | `false`   |              | JS source map files.                             |
 | `minified_urls` | `false`   |              | Minified URLs linked to source maps above        |
 | `local_username`| `false`   |              | Username of the deploying user. Alternative to setting ROLLBAR_USERNAME |
+| `comment`       | `false`   |              | Optional message for the deploy                  |
 
 ### Outputs
 
@@ -47,6 +48,7 @@ steps:
     with:
       environment: 'production'
       version: ${{ github.sha }}
+      comment: ${{ github.event.head_commit.message }}
     env:
       ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
       ROLLBAR_USERNAME: ${{ github.actor }}
