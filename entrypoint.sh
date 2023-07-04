@@ -49,6 +49,7 @@ fi
 
 # If not ROLLBAR_DEPLOY_ID something failed
 if [[ "$ROLLBAR_DEPLOY_ID" == "null" ]]; then
+    echo "deploy_id not available"
     exit 1
 fi
 
