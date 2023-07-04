@@ -40,6 +40,14 @@ RESPONSE=$(curl -X $METHOD https://api.rollbar.com/api/1/deploy/$DEPLOY_ID \
                 --form rollbar_username=$ROLLBAR_USERNAME \
                 --form local_username=$LOCAL_USERNAME)
 
+# If error code is not zero something failed
+ERROR_CODE=$(echo $RESPONSE | jq -r '.err')
+if [[ $ERROR_CODE -ne 0 ]]; then
+    ERROR_MESSAGE=$(echo $RESPONSE | jq -r '.message')
+    echo $ERROR_MESSAGE
+    exit 1
+fi
+
 # Get the deploy id depending on the response as they are different for POST and PATCH
 if [[ $METHOD == "POST" ]]; then
     ROLLBAR_DEPLOY_ID=$(echo $RESPONSE | jq -r '.data.deploy_id')
@@ -49,6 +57,7 @@ fi
 
 # If not ROLLBAR_DEPLOY_ID something failed
 if [[ "$ROLLBAR_DEPLOY_ID" == "null" ]]; then
+    echo "deploy_id not available"
     exit 1
 fi
 
